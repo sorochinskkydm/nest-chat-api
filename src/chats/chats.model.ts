@@ -1,21 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
 import {
+  BelongsToMany,
   Column,
   DataType,
   Model,
   Table,
-  BelongsToMany,
 } from "sequelize-typescript";
-import { Chat } from "src/chats/chats.model";
-import { UserChat } from "src/chats/userChats.model";
+import { User } from "src/users/users.model";
+import { UserChat } from "./userChats.model";
 
 //Поля, которые нужны для создание объекта из этого класса
-interface IUserCreateAttrs {
+interface IChatCreateAttrs {
   username: string;
 }
 
-@Table({ tableName: "users", updatedAt: false })
-export class User extends Model<User, IUserCreateAttrs> {
+@Table({ tableName: "chats", updatedAt: false })
+export class Chat extends Model<Chat, IChatCreateAttrs> {
   @ApiProperty({ example: "1", description: "Уникальный идентификатор" })
   @Column({
     type: DataType.INTEGER,
@@ -25,13 +25,20 @@ export class User extends Model<User, IUserCreateAttrs> {
   })
   id: number;
   @ApiProperty({
-    example: "user_1",
-    description: "Уникальное имя пользователя",
+    example: "chat_1",
+    description: "Уникальное имя чата",
   })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  username: string;
+  name: string;
+
+  @ApiProperty({
+    example: "chat_1",
+    description: "Список пользователей в чате",
+  })
+  @Column({ type: DataType.ARRAY(DataType.STRING) })
+  users: User[];
 
   //С кем связываем, и через какую таблицу идет связь
-  @BelongsToMany(() => Chat, () => UserChat)
-  Chats: Chat[];
+  @BelongsToMany(() => User, () => UserChat)
+  Users: User[];
 }
