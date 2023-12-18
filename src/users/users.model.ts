@@ -5,9 +5,13 @@ import {
   Model,
   Table,
   BelongsToMany,
+  BelongsTo,
+  HasMany,
+  ForeignKey,
 } from "sequelize-typescript";
 import { Chat } from "src/chats/chats.model";
 import { UserChat } from "src/chats/userChats.model";
+import { Message } from "src/messages/messages.model";
 
 //Поля, которые нужны для создание объекта из этого класса
 interface IUserCreateAttrs {
@@ -31,7 +35,17 @@ export class User extends Model<User, IUserCreateAttrs> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   username: string;
 
-  //С кем связываем, и через какую таблицу идет связь
   @BelongsToMany(() => Chat, () => UserChat)
-  Chats: Chat[];
+  chats: Chat[];
+
+  @HasMany(() => Message)
+  messages: Message[];
+
+  //С кем связываем, и через какую таблицу идет связь
+  // @BelongsToMany(() => Chat, () => UserChat)
+  // Chats: Chat[];
+
+  // //Many-to-one to Messages
+  // @HasMany(() => Message)
+  // messages: Message[];
 }

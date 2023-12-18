@@ -8,6 +8,10 @@ import { User } from "./users/users.model";
 import { ChatsModule } from "./chats/chats.module";
 import { Chat } from "./chats/chats.model";
 import { UserChat } from "./chats/userChats.model";
+import { MessagesService } from "./messages/messages.service";
+import { MessagesController } from "./messages/messages.controller";
+import { MessagesModule } from "./messages/messages.module";
+import { Message } from "./messages/messages.model";
 
 @Module({
   imports: [
@@ -22,11 +26,12 @@ import { UserChat } from "./chats/userChats.model";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Chat, UserChat], //Регистрация моделей БД в главном модуле
+      models: [User, Chat, UserChat, Message], //Регистрация моделей БД в главном модуле
       autoLoadModels: true, //Чтобы sequelize создавал таблицы на основе созданных моделей
     }),
     UsersModule,
     ChatsModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

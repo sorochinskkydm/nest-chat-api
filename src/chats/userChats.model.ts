@@ -9,7 +9,7 @@ import {
 import { User } from "src/users/users.model";
 import { Chat } from "./chats.model";
 
-@Table({ tableName: "chats", createdAt: false, updatedAt: false })
+@Table({ tableName: "userChats", createdAt: false, updatedAt: false })
 export class UserChat extends Model<UserChat> {
   @ApiProperty({ example: "1", description: "Уникальный идентификатор" })
   @Column({
@@ -19,13 +19,14 @@ export class UserChat extends Model<UserChat> {
     primaryKey: true,
   })
   id: number;
+
   @ApiProperty({
     example: "1",
     description: "Уникальный идентификатор пользователя",
   })
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
-  userId: string;
+  userId: number;
 
   @ApiProperty({
     example: "1",
@@ -33,5 +34,5 @@ export class UserChat extends Model<UserChat> {
   })
   @ForeignKey(() => Chat)
   @Column({ type: DataType.INTEGER })
-  chatId: string;
+  chatId: number;
 }

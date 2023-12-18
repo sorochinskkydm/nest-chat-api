@@ -5,9 +5,11 @@ import {
   DataType,
   Model,
   Table,
+  HasMany,
 } from "sequelize-typescript";
 import { User } from "src/users/users.model";
 import { UserChat } from "./userChats.model";
+import { Message } from "src/messages/messages.model";
 
 //Поля, которые нужны для создание объекта из этого класса
 interface IChatCreateAttrs {
@@ -33,12 +35,14 @@ export class Chat extends Model<Chat, IChatCreateAttrs> {
 
   @ApiProperty({
     example: "chat_1",
-    description: "Список пользователей в чате",
+    description: "Список идентификаторов пользователей в чате",
   })
-  @Column({ type: DataType.ARRAY(DataType.STRING) })
+  @Column({ type: DataType.ARRAY(DataType.INTEGER) })
   users: User[];
 
-  //С кем связываем, и через какую таблицу идет связь
+  @HasMany(() => Message)
+  messages: Message[];
+
   @BelongsToMany(() => User, () => UserChat)
-  Users: User[];
+  usersTest: User[];
 }
