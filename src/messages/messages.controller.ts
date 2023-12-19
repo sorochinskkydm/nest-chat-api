@@ -1,12 +1,13 @@
 import { Controller } from "@nestjs/common";
 import { MessagesService } from "./messages.service";
-import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Body } from "@nestjs/common";
 import { Post, Get } from "@nestjs/common";
 import { Message } from "./messages.model";
 import { SendMessageDto } from "./dto/sendMessage.dto";
 import { getMessagesDto } from "./dto/getMessages.dto";
 
+@ApiTags("Сообщения")
 @Controller("messages")
 export class MessagesController {
   constructor(private messageRepository: MessagesService) {}

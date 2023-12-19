@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { UserChat } from "../userChats.model";
 
 export class CreateChatDto {
   @ApiProperty({ example: "chat_1", description: "Название чата" })
