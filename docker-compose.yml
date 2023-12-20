@@ -1,0 +1,38 @@
+#Версия
+version: "1.0"
+
+#Сервисы которые будут подниматься, в данном случае сам проект и база данных
+services:
+  #Проект
+  main:
+    container_name: main #Имя контейнера
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 9000:4444
+    command: npm run start:dev
+    depends_on:
+      - postgres
+    restart: always
+
+  #База данных
+  postgres:
+    container_name: postgres #Имя контейнера
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      - PG_DATA = "/var/lib/postgresql/data"
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pgdata:
