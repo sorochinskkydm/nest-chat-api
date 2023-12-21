@@ -14,7 +14,7 @@ nest-chat-api
 
 ## Маршруты
 
-Все доступные маршруты доступны по адресу:
+Все доступные маршруты указаны по адресу:
 
 Swagger
 [http://localhost:9000/api/docs](http://localhost:9000/api/docs)
