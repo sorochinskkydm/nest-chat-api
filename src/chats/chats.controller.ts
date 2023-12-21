@@ -16,11 +16,4 @@ export class ChatsController {
   add(@Body() dto: CreateChatDto) {
     return this.chatRepository.add(dto);
   }
-
-  @ApiOperation({ summary: "Создать чат" })
-  @ApiResponse({ status: 200, type: Chat })
-  @Post("get")
-  get(@Body() userId: any) {
-    return this.chatRepository.getChats(userId);
-  }
 }
